@@ -6,29 +6,37 @@
 
 本仓库提供了一个 `PHP` 小爬虫，用于在服务端定时抓取解析 `GitHub Trending` 数据并缓存，以提供给客户端快速（秒级）的查询接口。它可以分别以天（`Daily`）、周（`Weekly`）、月（`Monthly`）三个维度抓取各种编程语言下最受关注的 `Repositories` 和 `Developers`。
 
-## 方法说明
+## 说明
 
 这个小爬虫的核心代码主要是 `crawler` 文件夹下的 `simple_html_dom.php` 和 `github_trending_crawler.php` 两个文件。
 
-### simple_html_dom.php : 
+#### simple_html_dom.php
 
 此文件来自开源库 [PHP Simple HTML DOM Parser](https://sourceforge.net/projects/simplehtmldom/)，它提供了一个简单易用单，功能强大的 `HTML DOM` 解析方法，便于我们用 `PHP` 抓取网页的 `HTML` 并进行分析。
 
-### github_trending_crawler.php : 
+#### github_trending_crawler.php
 
 此文件主要用于抓取解析 `GitHub Trending` 数据，包含以下方法：
 
-* **gt_get_html_dom()** : 此方法需要传入一个 `url` 参数，用于获取指定 `url` 下的 `HTML`，并返回一个 `simple_html_dom` 对象，方便后续解析 `HTML` 中不同标签里的数据。
+* **gt_get_html_dom()**
 
-* **gt_get_top_languages()** : 此方法用于获取 `GitHub Trending` 页面右侧推荐的目前较流行的编程语言（**注：登录状态下每个人看到的结果可能不同，此方法是在未登录下抓取的**），返回一个 `languages` 数组，数组中的每一项包含 `name` 和 `id` 两个字段，大致如下：
+此方法需要传入一个 `url` 参数，用于获取指定 `url` 下的 `HTML`，并返回一个 `simple_html_dom` 对象，方便后续解析 `HTML` 中不同标签里的数据。
+
+* **gt_get_top_languages()**
+
+此方法用于获取 `GitHub Trending` 页面右侧推荐的目前较流行的编程语言（**注：登录状态下每个人看到的结果可能不同，此方法是在未登录下抓取的**），返回一个 `languages` 数组，数组中的每一项包含 `name` 和 `id` 两个字段，大致如下：
 
 ```json
 {"languages":[{"name":"C++","id":"c++"},{"name":"PHP","id":"php"}, ... ]}
 ```
 
-* **gt_get_all_languages()** : 此方法用于获取 `GitHub` 所有的编程语言，同样返回一个 `languages` 数组，结构与上述类似。
+* **gt_get_all_languages()**
 
-* **gt_get_repositories()** : 此方法接收两个参数 `lang` 和 `since`，其中 `lang` 的取值来自上述 `languages` 中返回的 `id`，`since` 的取值包括 `daily`，`weekly`，`monthly`，它用于获取指定时间维度下，某一编程语言最受关注的**开源项目**，返回一个 `repositories` 数组，大致如下：
+此方法用于获取 `GitHub` 所有的编程语言，同样返回一个 `languages` 数组，结构与上述类似。
+
+* **gt_get_repositories()**
+
+此方法接收两个参数 `lang` 和 `since`，其中 `lang` 的取值来自上述 `languages` 中返回的 `id`，`since` 的取值包括 `daily`，`weekly`，`monthly`，它用于获取指定时间维度下，某一编程语言最受关注的**开源项目**，返回一个 `repositories` 数组，大致如下：
 
 ```json
 {
@@ -64,7 +72,9 @@
 ]}
 ```
 
-* **gt_get_developers()** : 此方法同样接收两个参数 `lang` 和 `since`，取值与 `gt_get_repositories()` 方法类似，它用于获取指定时间维度下，某一编程语言最受欢迎的**开发者**，返回一个 `developers` 数组，大致如下：
+* **gt_get_developers()**
+
+此方法同样接收两个参数 `lang` 和 `since`，取值与 `gt_get_repositories()` 方法类似，它用于获取指定时间维度下，某一编程语言最受欢迎的**开发者**，返回一个 `developers` 数组，大致如下：
 
 ```json
 {
