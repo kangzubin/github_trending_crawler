@@ -6,6 +6,8 @@
 
 本仓库提供了一个 `PHP` 小爬虫，用于在服务端定时抓取解析 `GitHub Trending` 数据并缓存，以提供给客户端快速（秒级）的查询接口。它可以分别以天（`Daily`）、周（`Weekly`）、月（`Monthly`）三个维度抓取各种编程语言下最受关注的 `Repositories` 和 `Developers`。
 
+## 方法说明
+
 这个小爬虫的核心代码主要是 `crawler` 文件夹下的 `simple_html_dom.php` 和 `github_trending_crawler.php` 两个文件。
 
 ### simple_html_dom.php : 
@@ -111,7 +113,7 @@ https://path/to/example.php?action=all_languages
  其中，`URL` 的 `query` 请求参数的默认值如下：
  * lang: `null` // 默认获取全部语言的结果
  * since: `daily` // 默认获取今日的数据
- * action: `repositories` // 默认获取
+ * action: `repositories` // 默认获取开源项目数据
 
 当然，如果每次访问 `example.php` 脚本都去实时抓取一遍数据，显然是很耗时的，而且 `GitHub Trending` 页面的更新频率也不是很快，所以我们可以在服务端通过 `Redis` 把数据缓存下来，下次访问时如果缓存中有数据就直接返回，可以大大提高访问速度，详见 `example_with_redis.php` 文件。
 
@@ -130,19 +132,19 @@ file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages: e
 为了让大家能够更直观地感受上述小爬虫所带来的效果，我在我自己的服务器上部署了一套环境，大家可以直接访问以下示例 `URL` 获得相关结果：
 
 // 默认获取今日所有编程语言下开源项目的 Trending 数据
-[https://app.kangzubin.com/trending/test](https://app.kangzubin.com/trending/test)
+>[https://app.kangzubin.com/trending/test](https://app.kangzubin.com/trending/test)
 
 // 获取今日 Swift 语言下开源项目的 Trending 数据
-[https://app.kangzubin.com/trending/test?lang=swift&since=daily](https://app.kangzubin.com/trending/test?lang=swift&since=daily)
+>[https://app.kangzubin.com/trending/test?lang=swift&since=daily](https://app.kangzubin.com/trending/test?lang=swift&since=daily)
 
 // 获取本月 Swift 语言下开源项目的 Trending 数据
-[https://app.kangzubin.com/trending/test?action=repositories&lang=swift&since=monthly](https://app.kangzubin.com/trending/test?action=repositories&lang=swift&since=monthly)
+>[https://app.kangzubin.com/trending/test?action=repositories&lang=swift&since=monthly](https://app.kangzubin.com/trending/test?action=repositories&lang=swift&since=monthly)
 
 // 获取本周 Objective-C 语言下开发者的 Trending 数据
-[https://app.kangzubin.com/trending/test?action=developers&lang=objective-c&since=weekly](https://app.kangzubin.com/trending/test?action=developers&lang=objective-c&since=weekly)
+>[https://app.kangzubin.com/trending/test?action=developers&lang=objective-c&since=weekly](https://app.kangzubin.com/trending/test?action=developers&lang=objective-c&since=weekly)
 
 // 获取最受关注的编程语言和所有的编程语言列表
-[https://app.kangzubin.com/trending/test?action=top_languages](https://app.kangzubin.com/trending/test?action=top_languages)
+>[https://app.kangzubin.com/trending/test?action=top_languages](https://app.kangzubin.com/trending/test?action=top_languages)
 [https://app.kangzubin.com/trending/test?action=all_languages](https://app.kangzubin.com/trending/test?action=all_languages)
 
 **重要说明**：第一次访问上述接口获取相关数据时，如果缓存中有数据，就直接返回；如果缓存中没有数据，会实时抓取 `GitHub Trending` 页面数据进行解析并缓存，此时接口返回的速度回比较慢。**另外，由于是测试用，所以数据一旦缓存后，我并没有去定时更新，所以上述测试接口有时候返回的数据可能是过时的。**
