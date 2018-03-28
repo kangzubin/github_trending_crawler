@@ -1,4 +1,4 @@
-# PHP Github Trending Crawler
+# PHP GitHub Trending Crawler
 
 ## 简介
 
@@ -10,11 +10,11 @@
 
 这个小爬虫的核心代码主要是 `crawler` 文件夹下的 `simple_html_dom.php` 和 `github_trending_crawler.php` 两个文件。
 
-#### simple_html_dom.php
+>**simple_html_dom.php**
 
 此文件来自开源库 [PHP Simple HTML DOM Parser](https://sourceforge.net/projects/simplehtmldom/)，它提供了一个简单易用单，功能强大的 `HTML DOM` 解析方法，便于我们用 `PHP` 抓取网页的 `HTML` 并进行分析。
 
-#### github_trending_crawler.php
+>**github_trending_crawler.php**
 
 此文件主要用于抓取解析 `GitHub Trending` 数据，包含以下方法：
 
