@@ -143,9 +143,11 @@ file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages: e
 // 获取本周 Objective-C 语言下开发者的 Trending 数据
 >[https://app.kangzubin.com/trending/test?action=developers&lang=objective-c&since=weekly](https://app.kangzubin.com/trending/test?action=developers&lang=objective-c&since=weekly)
 
-// 获取最受关注的编程语言和所有的编程语言列表
+// 获取最受关注的编程语言列表
 >[https://app.kangzubin.com/trending/test?action=top_languages](https://app.kangzubin.com/trending/test?action=top_languages)
-[https://app.kangzubin.com/trending/test?action=all_languages](https://app.kangzubin.com/trending/test?action=all_languages)
+
+// 获取所有的编程语言列表
+>[https://app.kangzubin.com/trending/test?action=all_languages](https://app.kangzubin.com/trending/test?action=all_languages)
 
 **重要说明**：第一次访问上述接口获取相关数据时，如果缓存中有数据，就直接返回；如果缓存中没有数据，会实时抓取 `GitHub Trending` 页面数据进行解析并缓存，此时接口返回的速度回比较慢。**另外，由于是测试用，所以数据一旦缓存后，我并没有去定时更新，所以上述测试接口有时候返回的数据可能是过时的。**
 
